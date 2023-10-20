@@ -6,14 +6,14 @@ const DB_PASSWORD = process.env.DB_PASSWORD || "Pg#123";
 const DB_HOST = process.env.DB_HOST || "localhost";
 
 const seque = new sequelize.Sequelize(DB_DATABASE, DB_USERNAME, DB_PASSWORD, {
-    host: DB_HOST,
-    dialect: 'postgres'
-  });
+  host: DB_HOST,
+  dialect: 'postgres'
+});
 
 class Post extends sequelize.Model {
-  
+
   save() {
-    
+
     console.log('Entrou')
     super.save();
   }
@@ -42,7 +42,7 @@ Post.init({
 })
 
 exports.initDatabase = () => {
-    seque.sync({ alter: true })
+  seque.sync({ alter: true })
 }
 
 exports.Post = Post;

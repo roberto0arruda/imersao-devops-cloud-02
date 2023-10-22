@@ -55,7 +55,14 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           # AWS Secret Access Key. Required if aws-access-key-id is provided.
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: configurar o kubeconfig
-        run: echo "configurar o kubeconfig"
-      - name: aplicar o deploy
-        run: echo "executa kubectl apply"
+      - name: config kubeconfig
+        run: aws eks update-kubeconfig --name ImersaoDevOpsCloud --region us-east-1
+      - name: Deploy to Kubernetes cluster
+        uses: Azure/k8s-deploy@v4.9
+        with:
+          # Path to the manifest files which will be used for deployment.
+          manifests: |
+            ./kube-news/k8s/deployment.yml
+          # Fully qualified resource URL of the image(s) to be used for substitutions on the manifest files Example: contosodemo.azurecr.io/helloworld:test
+          images: |
+            roberto0arruda/kube-news:${{ github.run_number }}

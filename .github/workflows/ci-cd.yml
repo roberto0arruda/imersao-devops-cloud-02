@@ -1,0 +1,27 @@
+name: CI-CD
+
+on:
+  push:
+    branches: ['desafios-imersao']
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: efetua login no docker
+        run: echo "executa docker login"
+      - name: constroi a imagem docker
+        run: echo "executa docker build"
+      - name: envia a imagem para o registry
+        run: echo "executa docker push"
+
+  cd:
+    runs-on: ubuntu-latest
+    needs: ci
+    steps:
+      - name: autenticar na AWS
+        run: echo "autenticar AWS"
+      - name: configurar o kubeconfig
+        run: echo "configurar o kubeconfig"
+      - name: aplicar o deploy
+        run: echo "executa kubectl apply"
